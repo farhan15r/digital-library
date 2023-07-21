@@ -18,7 +18,7 @@ class BookController extends Controller
     {
         $category_id = $request->query('category_id');
 
-        $booksQuery = Book::query();
+        $booksQuery = Book::with(['category']);
 
         if(!auth()->user()->is_admin) {
             $booksQuery->where('owner_id', auth()->user()->id);
@@ -28,6 +28,7 @@ class BookController extends Controller
         }
 
         $books = $booksQuery->get();
+
         $categories = Category::all();
 
         $data = [
@@ -219,7 +220,7 @@ class BookController extends Controller
     {
         $category_id = $request->query('category_id');
 
-        $booksQuery = Book::query();
+        $booksQuery = Book::with(['category', 'owner']);
 
         if(!auth()->user()->is_admin) {
             $booksQuery->where('owner_id', auth()->user()->id);
