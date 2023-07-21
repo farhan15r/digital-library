@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function() {
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/', [BookController::class, 'index'])->name('home');
+    Route::get('/books/export', [BookController::class, 'export'])->name('books.export');
     Route::resource('/books', BookController::class)->name('*', 'books');
 });
 

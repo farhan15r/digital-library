@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class BookController extends Controller
 {
@@ -209,5 +210,32 @@ class BookController extends Controller
         $book->delete();
 
         return redirect()->route('books.index')->with('success', 'Book deleted successfully');
+    }
+
+    /**
+     * Export books to PDF.
+     */
+    public function export(Request $request)
+    {
+        $category_id = $request->query('category_id');
+
+        $booksQuery = Book::query();
+
+        if(!auth()->user()->is_admin) {
+            $booksQuery->where('owner_id', auth()->user()->id);
+        }
+        if ($category_id) {
+            $booksQuery->where('category_id', $category_id);
+        }
+
+        $books = $booksQuery->get();
+
+        $data = [
+            'books' => $books,
+        ];
+
+        $pdf = PDF::loadView('books.export', $data);
+
+        return $pdf->download('books.pdf');
     }
 }

@@ -41,7 +41,12 @@
             <div class="alert alert-danger">{{ session('error') }}</div>
         @endif
 
-        <a href="{{ route('books.create') }}" class="btn btn-primary">Add new book</a>
+        <div class="d-flex justify-content-between">
+            <a href="{{ route('books.create') }}" class="btn btn-primary">Add new book</a>
+
+            <a href="{{ route('books.export') }}" class="btn btn-success">Export all data</a>
+        </div>
+
 
         <div class="mt-3">
             <form action="{{ route('books.index') }}" method="GET">
@@ -57,8 +62,12 @@
                         </select>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-8 d-flex justify-content-between">
                         <button type="submit" class="btn btn-primary">Filter</button>
+                        {{-- export filtered data --}}
+                        <a href="{{ route('books.export', ['category_id' => request()->get('category_id')]) }}"
+                            class="btn btn-success">Export filtered data</a>
+
                     </div>
                 </div>
             </form>
