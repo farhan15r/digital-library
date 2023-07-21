@@ -13,16 +13,25 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        if (auth()->user()->is_admin == true) {
-            $books = Book::all();
-        } else {
-            $books = Book::where('owner_id', auth()->user()->id)->get();
+        $category_id = $request->query('category_id');
+
+        $booksQuery = Book::query();
+
+        if(!auth()->user()->is_admin) {
+            $booksQuery->where('owner_id', auth()->user()->id);
         }
+        if ($category_id) {
+            $booksQuery->where('category_id', $category_id);
+        }
+
+        $books = $booksQuery->get();
+        $categories = Category::all();
 
         $data = [
             'books' => $books,
+            'categories' => $categories,
         ];
 
         return view('books.index', $data);

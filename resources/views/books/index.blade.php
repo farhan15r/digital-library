@@ -37,11 +37,32 @@
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
-        @if(session('error'))
+        @if (session('error'))
             <div class="alert alert-danger">{{ session('error') }}</div>
         @endif
 
         <a href="{{ route('books.create') }}" class="btn btn-primary">Add new book</a>
+
+        <div class="mt-3">
+            <form action="{{ route('books.index') }}" method="GET">
+                <div class="row">
+                    <div class="col-md-4">
+                        <select name="category_id" class="form-control">
+                            <option value="">All Categories</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}"
+                                    {{ request()->get('category_id') == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary">Filter</button>
+                    </div>
+                </div>
+            </form>
+        </div>
 
         <table class="table">
             <thead>
