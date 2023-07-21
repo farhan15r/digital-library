@@ -7,13 +7,17 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item">
+                <li class="nav-item d-flex gap-3">
                     @auth
+                        @if (auth()->user()->is_admin)
+                            <a class="nav-link sbtn" href="{{ route('categories.index') }}">Categories</a>
+                        @endif
+
                         {{-- logout --}}
                         <form action="{{ route('logout') }}" method="POST">
                             @method('DELETE')
                             @csrf
-                            <button class="nav-link btn btn-danger" type="submit">Logout</button>
+                            <button class="nav-link sbtn btn-danger" type="submit">Logout</button>
                         </form>
                     @else
                         {{-- login --}}

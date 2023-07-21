@@ -16,6 +16,8 @@
     @include('components.navbar')
 
     <div class="container mt-5">
+        <a href="{{ route('books.index') }}" class="btn btn-secondary mb-3">Back</a>
+
         <div class="row">
             <div class="col-md-4">
                 <img src="{{ $book->image }}" class="img-fluid" alt="{{ $book->title }}">

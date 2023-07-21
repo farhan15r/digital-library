@@ -28,7 +28,7 @@
     @include('components.navbar')
 
     <div class="container mt-4">
-        <a href="{{ route('books.index') }}" class="btn btn-secondary mb-3">Back</a>
+        <a href="{{ route('books.show', $book->id) }}" class="btn btn-secondary mb-3">Back</a>
 
         <h2 class="mb-3">Add Book</h2>
         <form method="POST" action="{{ route('books.update', $book->id) }}" enctype="multipart/form-data">
