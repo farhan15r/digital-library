@@ -22,4 +22,12 @@ class Category extends Model
      * timestamps disabled
      */
     public $timestamps = false;
+
+    /**
+     * Get the books for the category.
+     */
+    public function books()
+    {
+        return $this->hasMany(Book::class);
+    }
 }

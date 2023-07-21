@@ -34,6 +34,9 @@
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
+        @if (session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
         <a href="{{ route('categories.create') }}" class="btn btn-primary mb-3">Add New Category</a>
         <table class="table">
             <thead>

@@ -72,7 +72,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        if($request->name != $category->name){
+        if ($request->name != $category->name) {
             $validated = $request->validate([
                 'name' => 'required|unique:categories|max:255',
             ]);
@@ -89,8 +89,14 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        $relatedBooks = $category->books;
+
+        if ($relatedBooks) {
+            return redirect()->route('categories.index')->with('error', 'Cannot delete category, books are associated with this category, please delete books first');
+        }
+
         $category->delete();
 
-        return redirect()->route('categories')->with('success', 'Category deleted successfully');
+        return redirect()->route('categories.index')->with('success', 'Category deleted successfully');
     }
 }
